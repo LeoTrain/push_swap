@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_includes.c                                      :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:50:14 by leberton          #+#    #+#             */
-/*   Updated: 2025/05/22 16:50:44 by leberton         ###   ########.fr       */
+/*   Created: 2025/04/23 08:47:19 by leberton          #+#    #+#             */
+/*   Updated: 2025/05/23 08:31:27 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_sorted(t_list *tab)
+int	ft_atoi(const char *nptr)
 {
-	while (tab && tab->next)
-	{
-		if (*(int *)tab->content > *(int *)tab->next->content)
-			return (0);
-		tab = tab->next;
-	}
-	return (1);
-}
+	int		sign;
+	long	result;
 
-int	is_lower(t_list *tab, int value)
-{
-	if (*(int *)tab->content < value)
-		return (1);
-	return (0);
+	sign = 1;
+	result = 0;
+	while (*nptr == ' ' || (*nptr >= 9 && *nptr <= 13))
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+	{
+		if (*nptr == '-')
+			sign = -1;
+		nptr++;
+	}
+	while (ft_isdigit(*nptr))
+	{
+		result = result * 10 + (*nptr - '0');
+		nptr++;
+	}
+	return (result * sign);
 }

@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
+/*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/27 21:23:11 by leberton          #+#    #+#             */
-/*   Updated: 2025/05/22 14:33:04 by leberton         ###   ########.fr       */
+/*   Created: 2025/05/23 09:14:29 by leberton          #+#    #+#             */
+/*   Updated: 2025/05/23 09:17:24 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+long long ft_atoll(const char *nptr)
 {
-	t_list	*current;
-	t_list	*next;
+	int			i;
+	int			sign;
+	long long	result;
 
-	current = *lst;
-	while (current)
+	i = 0;
+	sign = 1;
+	result = 0;
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
 	{
-		next = current->next;
-		del(current->content);
-		free(current);
-		current = next;
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
 	}
-	*lst = NULL;
+	while (ft_isdigit(nptr[i]))
+	{
+		result = result * 10 + (nptr[i] - '0');
+		i++;
+	}
+	return (result * sign);
 }
