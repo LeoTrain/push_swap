@@ -31,7 +31,7 @@ while (*tab_a)
     }
 
     // 3. Push the lowest value to tab_b
-    push(tab_a, tab_b, 1);  // or pb
+    push(tab_a, tab_b, 0);  // or pb
 }
 ```
 
