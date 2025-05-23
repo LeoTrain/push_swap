@@ -6,18 +6,68 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:51:54 by leberton          #+#    #+#             */
-/*   Updated: 2025/05/22 17:42:20 by leberton         ###   ########.fr       */
+/*   Updated: 2025/05/23 07:44:29 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+static t_list *copy_list(t_list *src)
+{
+	t_list *copy = NULL;
+	t_list *new_node;
+	int    *value;
+
+	while (src)
+	{
+		value = malloc(sizeof(int));
+		if (!value)
+			return (NULL);
+		*value = *(int *)src->content;
+		new_node = ft_lstnew(value);
+		if (!new_node)
+			return (NULL);
+		ft_lstadd_back(&copy, new_node);
+		src = src->next;
+	}
+	return copy;
+}
+
+static int sort_tabs(t_list **tab_a, t_list **tab_b)
+{
+	int steps = 0;
+	int pos;
+	int size;
+
+	while (*tab_a)
+	{
+		pos = find_position_of_lowest(*tab_a);
+		size = ft_lstsize(*tab_a);
+		if (pos <= size / 2)
+		{
+			while (pos-- > 0)
+				rotate(tab_a, 1);
+		}
+		else
+		{
+			pos = size - pos;
+			while (pos-- > 0)
+				rotate_reverse(tab_a, 1);
+		}
+		push(tab_a, tab_b, 1);
+		steps++;
+	}
+	return steps;
+}
+
 int	main(int argc, char **argv)
 {
 	t_list	*tab_a = NULL;
+	t_list	*tab_acopy = NULL;
 	t_list	*tab_b = NULL;
+	t_list	*tab_bcopy = NULL;
 	int		i = 1;
-	int		lowest;
+	int		steps;
 
 	if (argc < 2)
 		return (0);
@@ -29,35 +79,10 @@ int	main(int argc, char **argv)
 		*value = atoi(argv[i++]);
 		ft_lstadd_back(&tab_a, ft_lstnew(value));
 	}
-	print_ints_array(tab_a, tab_b);
-	lowest = check_for_lowest(tab_a);
-	int steps = 0;
-	while (tab_a)
-	{
-		// case 1: a is_lowest of a and b is lowest of b, a is greater than b
-		// case 2: a is lowest of a and b is lowest of b, a is less than b
-		// case 3: a is lowest of a and b is lowest of b, a is equal to b
-		// case 4: a is lowest of a and b is not lowest of b, a is greater than b
-		// case 5: a is lowest of a and b is not lowest of b, a is less than b
-		// case 6: a is lowest of a and b is not lowest of b, a is equal to b
-		//
-		// case 7: a is not lowest of a and b is lowest of b, a is greater than b
-		// case 8: a is not lowest of a and b is lowest of b, a is less than b
-		// case 9: a is not lowest of a and b is lowest of b, a is equal to b
-		// case 10: a is not lowest of a and b is not lowest of b, a is greater than b
-		// case 11: a is not lowest of a and b is not lowest of b, a is less than b
-		// case 12: a is not lowest of a and b is not lowest of b, a is equal to b
-		//
-		// Handling:
-		if (*(int *)tab_a->content == lowest || (tab_b && *(int *)tab_a->content == *(int *)tab_b->content))
-		{
-			push(&tab_a, &tab_b, 1);
-			lowest = check_for_lowest(tab_a);
-		}
-		else
-			rotate(&tab_a, 1);
-		steps++;
-	}
+	tab_acopy = copy_list(tab_a);
+	tab_bcopy = copy_list(tab_b);
+	steps = sort_tabs(&tab_a, &tab_b);
+	print_ints_array(tab_acopy, tab_bcopy);
 	print_ints_array(tab_a, tab_b);
 	printf("TOTAL STEPS: %d\n", steps);
 	return (0);

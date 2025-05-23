@@ -2,13 +2,13 @@ PUSH_SWAP_DIR=../push_swap
 PUSH_SWAP=$(PUSH_SWAP_DIR)/push_swap
 
 TESTS_DIR=tests
-TESTS = under100.txt over100.txt only0.txt maxmin.txt
+TESTS = under100.txt over100.txt only0.txt minmax.txt 100args.txt 500args.txt
 
 .PHONY: all clean fclean re $(basename $(TESTS))
 
 all: $(basename $(TESTS))
 
-$(basename $(TESTS)): $(PUSH_SWAP)
+$(basename $(TESTS)): fclean $(PUSH_SWAP)
 	@echo "Running test $@"
 	./$(PUSH_SWAP) $(shell cat $(TESTS_DIR)/$@.txt)
 
