@@ -25,9 +25,15 @@ int		ft_lstsize(t_list *lst);
 int		is_sorted(t_list *tab);
 int		is_lower(t_list *tab, int value);
 void	swap(t_list **tab, int is_a);
+void	swap_ab(t_list **tab_a, t_list **tab_b);
 void	rotate(t_list **tab, int is_a);
+void	rotate_ab(t_list **tab_a, t_list **tab_b);
+void	rotate_reverse(t_list **tab, int is_a);
+void	rotate_reverse_ab(t_list **tab_a, t_list **tab_b);
 void	push(t_list **tab_a, t_list **tab_b, int is_a);
 int		check_for_lowest(t_list *tab);
+int		check_for_highest(t_list *tab);
+int		find_position_of_lowest(t_list *lst);
 int		ft_puterror(void);
 void	print_ints_array(t_list *tab_a, t_list *tab_b);
 

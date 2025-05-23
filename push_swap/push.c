@@ -27,4 +27,3 @@ void	push(t_list **tab_a, t_list **tab_b, int is_a)
 	else
 		write(1, "pb\n", 3);
 }
-

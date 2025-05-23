@@ -26,6 +26,40 @@ int	check_for_lowest(t_list *tab)
 	return (lowest);
 }
 
+int check_for_highest(t_list *tab)
+{
+	if (!tab)
+		return (INT_MIN);
+	int highest = *(int *)tab->content;
+	while (tab)
+	{
+		if (*(int *)tab->content > highest)
+			highest = *(int *)tab->content;
+		tab = tab->next;
+	}
+	return (highest);
+}
+
+int find_position_of_lowest(t_list *lst)
+{
+	int min = *(int *)lst->content;
+	int pos = 0;
+	int i = 0;
+	t_list *tmp = lst;
+
+	while (tmp)
+	{
+		if (*(int *)tmp->content < min)
+		{
+			min = *(int *)tmp->content;
+			pos = i;
+		}
+		tmp = tmp->next;
+		i++;
+	}
+	return pos;
+}
+
 int	ft_puterror(void)
 {
 	write(2, "Error\n", 6);
