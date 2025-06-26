@@ -1,0 +1,28 @@
+#!/bin/bash
+
+PUSH_SWAP="../push_swap/push_swap"
+CHECKER=./checker_linux
+
+function run_tests()
+{
+	local TESTS=$1
+	local NUMBERS=$2
+	local INT_MIN=-1000000
+	local INT_MAX=1000000
+
+	for ((i=1; i<=TESTS; i++)); do
+		args=$(seq $INT_MIN $INT_MAX | shuf | head -n $NUMBERS | tr '\n' ' ')
+		if [[ -z "$args" ]]; then
+			echo "ERROR MY FRIEND"
+			continue
+		fi
+		output=$($PUSH_SWAP $args)
+		moves=$(echo "$output" | wc -l)
+		result=$(echo "$args" | $CHECKER $output)
+		printf "Test %2d (%3d elems): %5d moves - %s\n" "$i" "$NUMBERS" "$moves" "$result"
+	done
+	echo
+}
+
+run_tests 20 100
+run_tests 20 500
