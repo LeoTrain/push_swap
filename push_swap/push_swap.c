@@ -12,13 +12,15 @@
 
 #include "push_swap.h"
 
-int push_swap(t_list **tab_a, t_list **tab_b)
+// static int	is_a_bigger(void *a, void *b)
+// {
+// 	return (*(int *)a > *(int *)b);
+// }
+
+void push_swap(t_list **tab_a, t_list **tab_b)
 {
-	int steps;
 	int pos;
 	int size;
-
-	steps = 0;
 	while (*tab_a)
 	{
 		pos = find_position_of_lowest(*tab_a);
@@ -35,7 +37,5 @@ int push_swap(t_list **tab_a, t_list **tab_b)
 				rotate_reverse(tab_a, 1);
 		}
 		push(tab_a, tab_b, 0);
-		steps++;
 	}
-	return steps;
 }

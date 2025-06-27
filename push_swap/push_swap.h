@@ -34,6 +34,6 @@ void	push(t_list **tab_a, t_list **tab_b, int is_a);
 int		find_position_of_lowest(t_list *lst);
 int		argv_checker(int argc, char **argv);
 t_list *create_tab_from_args(char **argv);
-int		push_swap(t_list **tab_a, t_list **tab_b);
+void		push_swap(t_list **tab_a, t_list **tab_b);
 
 #endif 
