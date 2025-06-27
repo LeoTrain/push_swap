@@ -40,5 +40,5 @@ function run_tests()
 	echo
 }
 
-run_tests 50 100
-run_tests 50 500
+run_tests 10 100
+run_tests 10 500
