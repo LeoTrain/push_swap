@@ -6,16 +6,18 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:56:58 by leberton          #+#    #+#             */
-/*   Updated: 2025/05/23 08:39:09 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:09:46 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_puterror(int error)
+int	ft_puterror(char *str)
 {
-	write(2, "Error\n", 6);
-	return (error);
+	while (*str)
+		write(1, str++, 1);
+	write(1, "\n", 1);
+	exit(1);
 }
 
 int find_position_of_lowest(t_list *lst)
@@ -36,4 +38,34 @@ int find_position_of_lowest(t_list *lst)
 		i++;
 	}
 	return pos;
+}
+
+int	is_sorted(t_list **list)
+{
+	t_list	*temp;
+
+	temp = *list;
+	while (temp && temp->next)
+	{
+		if (temp->index > temp->next->index)
+			return (0);
+		temp = temp->next;
+	}
+	return (1);
+}
+
+int	find_biggest(t_list *list)
+{
+	int		big;
+	t_list	*temp;
+
+	big = INT_MIN;
+	temp = list;
+	while (temp)
+	{
+		if (temp->index > big)
+			big = temp->index;
+		temp = temp->next;
+	}
+	return (big);
 }

@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	rotate(t_list **tab, int is_a)
+static void	rotate(t_list **tab)
 {
 	t_list *first;
 	t_list *last;
@@ -24,15 +24,23 @@ void	rotate(t_list **tab, int is_a)
 	*tab = (*tab)->next;
 	first->next = NULL;
 	last->next = first;
-	if (is_a == 1)
-		write(1, "ra\n", 3);
-	else if (is_a == 0)
-		write(1, "rb\n", 3);
+}
+
+void	rotate_a(t_list **tab)
+{
+	rotate(tab);
+	write(1, "ra\n", 3);
+}
+
+void	rotate_b(t_list **tab)
+{
+	rotate(tab);
+	write(1, "rb\n", 3);
 }
 
 void	rotate_ab(t_list **tab_a, t_list **tab_b)
 {
-	rotate(tab_a, -1);
-	rotate(tab_b, -1);
+	rotate(tab_a);
+	rotate(tab_b);
 	write(1, "rr\n", 3);
 }
