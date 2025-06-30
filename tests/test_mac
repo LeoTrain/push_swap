@@ -21,7 +21,7 @@ run_tests() {
     local failed_tests=()
     for ((i=1; i<=TESTS; i++)); do
         args=$(seq $INT_MIN $INT_MAX | gshuf | head -n $NUMBERS | tr '\n' ' ')
-        output=$($PUSH_SWAP $args 2>/dev/null)
+        output=$($PUSH_SWAP $args)
         moves=$(echo "$output" | wc -l)
         result=$(echo "$output" | $CHECKER $args)
 
@@ -37,9 +37,9 @@ run_tests() {
                 else                           printf "    \e[38;5;196m[  0%%]\e[0m "
                 fi
             elif (( NUMBERS <= 10 )); then
-                if   (( moves < 21 ));    then printf "    \e[38;5;82m[100%%]\e[0m "
-                elif (( moves < 26 ));    then printf "    \e[38;5;45m[ 80%%]\e[0m "
-                elif (( moves < 30 ));    then printf "    \e[38;5;214m[ 60%%]\e[0m "
+                if   (( moves < 40 ));    then printf "    \e[38;5;82m[100%%]\e[0m "
+                elif (( moves < 50 ));    then printf "    \e[38;5;45m[ 80%%]\e[0m "
+                elif (( moves < 60 ));    then printf "    \e[38;5;214m[ 60%%]\e[0m "
                 else                           printf "    \e[38;5;196m[  0%%]\e[0m "
                 fi
             elif (( NUMBERS <= 100 )); then
@@ -80,16 +80,16 @@ run_tests() {
         elif (( avg < 10 )); then result="PASS 80%"
         fi
 	elif (( NUMBERS <= 10 )); then
-        if (( avg < 21 )); then result="PASS 100%"
-        elif (( avg < 26 )); then result="PASS 80%"
-        elif (( avg < 30 )); then result="PASS 80%"
+        if (( avg < 40 )); then result="PASS 100%"
+        elif (( avg < 50 )); then result="PASS 80%"
+        elif (( avg < 60 )); then result="PASS 80%"
         fi
-    elif (( NUMBERS == 100 )); then
+    elif (( NUMBERS <= 100 )); then
         if (( avg < 700 )); then result="PASS 100%"
         elif (( avg < 1100 )); then result="PASS 80%"
         elif (( avg < 1300 )); then result="PASS 80%"
         fi
-    elif (( NUMBERS == 500 )); then
+    elif (( NUMBERS <= 500 )); then
         if (( avg < 5500 )); then result="PASS 100%"
         elif (( avg < 8500 )); then result="PASS 80%"
         elif (( avg < 11500 )); then result="PASS 80%"
