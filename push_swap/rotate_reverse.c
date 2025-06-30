@@ -12,28 +12,36 @@
 
 #include "push_swap.h"
 
-void	rotate_reverse(t_list **tab, int is_a)
+static void	rotate_reverse(t_list **list)
 {
 	t_list	*last;
 	t_list	*before_last;
-	if (!*tab || !(*tab)->next)
+	if (!*list || !(*list)->next)
 		return ;
-	last = ft_lstlast(*tab);
-	before_last = *tab;
+	last = ft_lstlast(*list);
+	before_last = *list;
 	while (before_last->next->next)
 		before_last = before_last->next;
 	before_last->next = NULL;
-	last->next = *tab;
-	*tab = last;
-	if (is_a == 1)
-		write(1, "rra\n", 4);
-	else if (is_a == 0)
-		write(1, "rrb\n", 4);
+	last->next = *list;
+	*list = last;
 }
 
-void	rotate_reverse_ab(t_list **tab_a, t_list **tab_b)
+void	rotate_reverse_a(t_list **list)
 {
-	rotate_reverse(tab_a, -1);
-	rotate_reverse(tab_b, -1);
+	rotate_reverse(list);
+	write(1, "rra\n", 4);
+}
+
+void	rotate_reverse_b(t_list **list)
+{
+	rotate_reverse(list);
+	write(1, "rrb\n", 4);
+}
+
+void	rotate_reverse_ab(t_list **list_a, t_list **list_b)
+{
+	rotate_reverse(list_a);
+	rotate_reverse(list_b);
 	write(1, "rrr\n", 4);
 }
