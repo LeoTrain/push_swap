@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 08:55:05 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 20:37:25 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 22:42:16 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 // 	tmp = *list;
 // 	while (tmp)
 // 	{
-// 		printf("val: %d | index: %d\n", *(int *)tmp->content, tmp->index);
+// 		printf("val: %d | index: %d\n", tmp->content, tmp->index);
 // 		tmp = tmp->next;
 // 	}
 // }
@@ -30,6 +30,8 @@ int	main(int argc, char **argv)
 	t_list	*list_a;
 	t_list	*list_b;
 
+	if (argc < 2)
+		return (0);
 	argv_checker(argc, argv);
 	list_a = create_list_from_args(argc, argv);
 	list_b = NULL;

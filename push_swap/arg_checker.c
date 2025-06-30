@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 08:25:38 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 20:14:47 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:05:29 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ static int number_checker(char *arg)
 void	assign_indexes(t_list *head, int link_size)
 {
 	t_list	*biggest;
-	t_list	*tmp;
+	t_list	*temp;
 
 	while (link_size-- > 0)
 	{
 		biggest = NULL;
-		tmp = head;
-		while (tmp)
+		temp = head;
+		while (temp)
 		{
-			if (!tmp->index && (biggest == NULL || *(int *)tmp->content > *(int *)biggest->content))
-				biggest = tmp;
-			tmp = tmp->next;
+			if (!temp->index && (biggest == NULL || temp->content > biggest->content))
+				biggest = temp;
+			temp = temp->next;
 		}
 		if (biggest)
 			biggest->index = link_size;
@@ -71,29 +71,29 @@ void	assign_indexes(t_list *head, int link_size)
 void	argv_checker(int argc, char **argv)
 {
 	int		i;
-	long	j;
+	long	temp_arg;
 	int		length;
-	char	**args;
+	char	**temp;
 
 	i = 0;
-	length = 0;
 	if (argc == 2)
-		args = ft_split(argv[1], ' ');
+		temp = ft_split(argv[1], ' ');
 	else
-		args = argv + 1;
-	while (args[i])
+		temp = argv + 1;
+	while (temp[i])
 	{
-		j = ft_atoi(args[i]);
-		if (j < INT_MIN || j > INT_MAX)
+		temp_arg = ft_atoi(temp[i]);
+		if (temp_arg < INT_MIN || temp_arg > INT_MAX)
 			ft_puterror("ERROR");
-		if (number_checker(args[i]))
+		if (number_checker(temp[i]))
 			ft_puterror("ERROR");
 		i++;
 	}
-	while (args[length])
+	length = 0;
+	while (temp[length])
 		length++;
-	if (doubles_checker(args, length))
+	if (doubles_checker(temp, length))
 		ft_puterror("ERROR");
 	if (argc == 2)
-		ft_free_split(args);
+		ft_free_split(temp);
 }

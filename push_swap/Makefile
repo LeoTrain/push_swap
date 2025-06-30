@@ -1,5 +1,5 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -g -Wall -Wextra -Werror
 SRCS = utils.c ft_utils.c ft_split.c list.c swap.c rotate.c rotate_reverse.c push.c sort.c arg_checker.c create_list_from_args.c main.c
 OBJS = $(SRCS:.c=.o)
 NAME = push_swap

@@ -9,7 +9,7 @@
 
 typedef struct s_list
 {
-	void			*content;
+	int				content;
 	int				index;
 	struct s_list	*next;
 }					t_list;
@@ -21,7 +21,7 @@ long long	ft_atoll(const char *nptr);
 void		ft_lstadd_back(t_list **lst, t_list *new_list);
 void		ft_lstadd_front(t_list **lst, t_list *new_list);
 t_list		*ft_lstlast(t_list *lst);
-t_list		*ft_lstnew(void	*content);
+t_list		*ft_lstnew(int content);
 int			ft_lstsize(t_list *lst);
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 int			ft_puterror(char *str);
