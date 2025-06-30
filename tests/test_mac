@@ -18,6 +18,7 @@ run_tests() {
 
     print_header "Testing $NUMBERS elements ($TESTS runs)"
 
+    local failed_tests=()
     for ((i=1; i<=TESTS; i++)); do
         args=$(seq $INT_MIN $INT_MAX | gshuf | head -n $NUMBERS | tr '\n' ' ')
         output=$($PUSH_SWAP $args 2>/dev/null)
@@ -26,19 +27,32 @@ run_tests() {
 
         if [[ $result != "OK" ]]; then
             printf "    \e[38;5;196m[  0%%]\e[0m "
-            moves=$((moves + 100000))  # pénalité pour KO, fausse la moyenne
+            moves=$((moves + 100000))
+            failed_tests+=("$i:$args")
         else
-            if (( NUMBERS == 100 )); then
-                if   (( moves < 700 ));   then printf "    \e[38;5;82m[100%%]\e[0m "
-                elif (( moves < 1100 )); then printf "    \e[38;5;45m[ 80%%]\e[0m "
-                elif (( moves < 1300 )); then printf "    \e[38;5;214m[ 60%%]\e[0m "
-                else                         printf "    \e[38;5;196m[  0%%]\e[0m "
+            if (( NUMBERS <= 3 )); then
+                if   (( moves < 6 ));     then printf "    \e[38;5;82m[100%%]\e[0m "
+                elif (( moves < 8 ));     then printf "    \e[38;5;45m[ 80%%]\e[0m "
+                elif (( moves < 10 ));    then printf "    \e[38;5;214m[ 60%%]\e[0m "
+                else                           printf "    \e[38;5;196m[  0%%]\e[0m "
                 fi
-            elif (( NUMBERS == 500 )); then
-                if   (( moves < 5500 ));   then printf "    \e[38;5;82m[100%%]\e[0m "
+            elif (( NUMBERS <= 10 )); then
+                if   (( moves < 21 ));    then printf "    \e[38;5;82m[100%%]\e[0m "
+                elif (( moves < 26 ));    then printf "    \e[38;5;45m[ 80%%]\e[0m "
+                elif (( moves < 30 ));    then printf "    \e[38;5;214m[ 60%%]\e[0m "
+                else                           printf "    \e[38;5;196m[  0%%]\e[0m "
+                fi
+            elif (( NUMBERS <= 100 )); then
+                if   (( moves < 700 ));   then printf "    \e[38;5;82m[100%%]\e[0m "
+                elif (( moves < 1100 ));  then printf "    \e[38;5;45m[ 80%%]\e[0m "
+                elif (( moves < 1300 ));  then printf "    \e[38;5;214m[ 60%%]\e[0m "
+                else                           printf "    \e[38;5;196m[  0%%]\e[0m "
+                fi
+            elif (( NUMBERS <= 500 )); then
+                if   (( moves < 5500 ));  then printf "    \e[38;5;82m[100%%]\e[0m "
                 elif (( moves < 8500 ));  then printf "    \e[38;5;45m[ 80%%]\e[0m "
                 elif (( moves < 11500 )); then printf "    \e[38;5;214m[ 60%%]\e[0m "
-                else                          printf "    \e[38;5;196m[  0%%]\e[0m "
+                else                           printf "    \e[38;5;196m[  0%%]\e[0m "
                 fi
             fi
         fi
@@ -52,8 +66,25 @@ run_tests() {
     printf "\n\033[1;36m───────────────────────────────────────────────────\033[0m\n"
     printf "   ➔ \033[1;35mAverage moves:\033[0m %d\n" "$avg"
 
+	if (( ${#failed_tests[@]} > 0 )); then
+		printf "   ➔ \e[38;5;196mFailed tests:\e[0m\n"
+		for fail in "${failed_tests[@]}"; do
+			printf "      • %s\n" "$fail"
+		done
+	fi
+
     local result="FAIL"
-    if (( NUMBERS == 100 )); then
+	if (( NUMBERS <= 3 )); then
+        if (( avg < 6 )); then result="PASS 100%"
+        elif (( avg < 8 )); then result="PASS 80%"
+        elif (( avg < 10 )); then result="PASS 80%"
+        fi
+	elif (( NUMBERS <= 10 )); then
+        if (( avg < 21 )); then result="PASS 100%"
+        elif (( avg < 26 )); then result="PASS 80%"
+        elif (( avg < 30 )); then result="PASS 80%"
+        fi
+    elif (( NUMBERS == 100 )); then
         if (( avg < 700 )); then result="PASS 100%"
         elif (( avg < 1100 )); then result="PASS 80%"
         elif (( avg < 1300 )); then result="PASS 80%"
@@ -131,8 +162,12 @@ test_no_args() {
     printf "\n\033[1;36m═══════════════════════════════════════════════════\033[0m\n"
 }
 
-run_tests 10 100
-run_tests 10 500
+run_tests 10 3
+run_tests 10 5
+run_tests 10 10
+run_tests 10 50
+run_tests 25 100
+run_tests 25 500
 test_invalid_inputs
 test_edge_cases
 test_no_args
