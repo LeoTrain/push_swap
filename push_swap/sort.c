@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:10:34 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 22:45:11 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 23:18:41 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,30 @@ static int	find_position_of_lowest(t_list *list)
 		current_pos++;
 	}
 	return (lowest_pos);
+}
+
+void	sort_three(t_list **list)
+{
+	int	first = (*list)->content;
+	int	second = (*list)->next->content;
+	int	third = (*list)->next->next->content;
+
+	if (first > second && second < third && first < third)
+		swap_a(list);
+	else if (first > second && second > third)
+	{
+		swap_a(list);
+		rotate_reverse_a(list);
+	}
+	else if (first > second && second < third && first > third)
+		rotate_a(list);
+	else if (first < second && second > third && first < third)
+	{
+		swap_a(list);
+		rotate_a(list);
+	}
+	else if (first < second && second > third && first > third)
+		rotate_reverse_a(list);
 }
 
 static void simple_sort(t_list **list_a, t_list **list_b)
@@ -106,7 +130,11 @@ void	sort_list(t_list **list_a, t_list **list_b)
 	int	size;
 
 	size = ft_lstsize(*list_a);
-	if (!is_sorted(list_a) && size <= 5)
+	if (size == 2 && !is_sorted(list_a))
+		swap_a(list_a);
+	else if (size == 3)
+		sort_three(list_a);
+	else if (!is_sorted(list_a) && size <= 20)
 		simple_sort(list_a, list_b);
 	else if (!is_sorted(list_a))
 		radinx_sort(list_a, list_b);

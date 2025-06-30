@@ -6,24 +6,24 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 08:55:05 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 22:42:16 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 23:15:00 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
 
-// void	print_list(t_list **list)
-// {
-// 	t_list	*tmp;
-//
-// 	tmp = *list;
-// 	while (tmp)
-// 	{
-// 		printf("val: %d | index: %d\n", tmp->content, tmp->index);
-// 		tmp = tmp->next;
-// 	}
-// }
+void	print_list(t_list **list)
+{
+	t_list	*tmp;
+
+	tmp = *list;
+	while (tmp)
+	{
+		printf("val: %d | index: %d\n", tmp->content, tmp->index);
+		tmp = tmp->next;
+	}
+}
 
 int	main(int argc, char **argv)
 {

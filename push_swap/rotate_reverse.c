@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 07:13:04 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 22:19:43 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 23:14:16 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	rotate_reverse(t_list **list)
 	t_list	*last;
 	t_list	*before_last;
 
-	if (*list || !(*list)->next)
+	if (!*list || !(*list)->next)
 		return ;
 	last = ft_lstlast(*list);
 	before_last = *list;
