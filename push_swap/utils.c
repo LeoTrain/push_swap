@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:56:58 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 20:09:46 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:03:46 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ int	ft_puterror(char *str)
 
 int find_position_of_lowest(t_list *lst)
 {
-	int min = *(int *)lst->content;
+	int min;
 	int pos = 0;
 	int i = 0;
 	t_list *tmp = lst;
 
+	min = lst->content;
 	while (tmp)
 	{
-		if (*(int *)tmp->content < min)
+		if (tmp->content < min)
 		{
-			min = *(int *)tmp->content;
+			min = tmp->content;
 			pos = i;
 		}
 		tmp = tmp->next;

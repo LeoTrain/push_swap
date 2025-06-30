@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:10:34 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 20:28:59 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 22:45:11 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,50 @@ int	find_bits(int biggest_nbr)
 	return (max_bits);
 }
 
-static void simple_sort(t_list **list)
+static int	find_position_of_lowest(t_list *list)
 {
-	int	biggest;
+	int	lowest_value;
+	int	lowest_pos;
+	int	current_pos;
 
-	biggest = find_biggest(*list);
-	if ((*list)->index == biggest)
-		rotate_a(list);
-	else if ((*list)->next->index == biggest)
-		rotate_reverse_a(list);
-	if ((*list)->index > (*list)->next->index)
-		swap_a(list);
+	lowest_value = INT_MAX;
+	lowest_pos = 0;
+	current_pos = 0;
+	while (list)
+	{
+		if (list->index < lowest_value)
+		{
+			lowest_value = list->index;
+			lowest_pos = current_pos;
+		}
+		list = list->next;
+		current_pos++;
+	}
+	return (lowest_pos);
 }
 
-static void small_sort(t_list **list_a, t_list **list_b)
+static void simple_sort(t_list **list_a, t_list **list_b)
 {
+	int lowest_pos;
 	int size;
 
-	size = ft_lstsize(*list_a);
-	while (size > 3)
+	while (*list_a)
 	{
-		if ((*list_a)->index == 0 || (*list_a)->index == 1)
-			push_b(list_a, list_b);
+		size = ft_lstsize(*list_a);
+		lowest_pos = find_position_of_lowest(*list_a);
+		if (lowest_pos <= size / 2)
+			while (lowest_pos-- > 0)
+				rotate_a(list_a);
 		else
-			rotate_a(list_a);
-		size--;
+		{
+			lowest_pos = size - lowest_pos;
+			while (lowest_pos-- > 0)
+				rotate_reverse_a(list_a);
+		}
+		push_b(list_a, list_b);
 	}
-	simple_sort(list_a);
-	push_a(list_a, list_b);
-	push_a(list_a, list_b);
-	if ((*list_a)->index > (*list_b)->next->index)
-		swap_a(list_a);
+	while (*list_b)
+		push_a(list_a, list_b);
 }
 
 static void	radinx_sort(t_list **list_a, t_list **list_b)
@@ -93,10 +106,8 @@ void	sort_list(t_list **list_a, t_list **list_b)
 	int	size;
 
 	size = ft_lstsize(*list_a);
-	if (!is_sorted(list_a) && size <= 3)
-		simple_sort(list_a);
-	else if (!is_sorted(list_a) && size <= 5)
-		small_sort(list_a, list_b);
+	if (!is_sorted(list_a) && size <= 5)
+		simple_sort(list_a, list_b);
 	else if (!is_sorted(list_a))
 		radinx_sort(list_a, list_b);
 }

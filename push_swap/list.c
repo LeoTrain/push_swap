@@ -6,13 +6,13 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:34:50 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 19:40:56 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:07:36 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_list	*ft_lstnew(void	*content)
+t_list	*ft_lstnew(int content)
 {
 	t_list	*lst;
 
@@ -81,7 +81,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		del((*lst)->content);
 		free(*lst);
 		*lst = tmp;
 	}

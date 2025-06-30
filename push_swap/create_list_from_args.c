@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 08:53:51 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 20:06:46 by leberton         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:04:46 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,8 @@ static void ft_free_list(t_list *list, char **temp, int argc)
 static int add_arg_to_list(t_list **list_a, char **temp, int i, int argc)
 {
 	t_list	*new;
-	int		*value;
 
-	value = malloc(sizeof(int));
-	if (!value)
-	{
-		ft_free_list(*list_a, temp, argc);
-		return (0);
-	}
-	*value = ft_atoi(temp[i]);
-	new = ft_lstnew(value);
+	new = ft_lstnew(ft_atoi(temp[i]));
 	if (!new)
 	{
 		ft_free_list(*list_a, temp, argc);
