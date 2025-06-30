@@ -6,23 +6,16 @@ TESTS = under100.txt over100.txt only0.txt minmax.txt 100args.txt 500args.txt wr
 
 .PHONY: all clean fclean re $(basename $(TESTS))
 
-all: $(basename $(TESTS))
-
-$(basename $(TESTS)): fclean $(PUSH_SWAP)
-	@echo "Running test $@"
-	@while IFS= read -r line; do \
-		echo "Testing: $$line"; \
-		./$(PUSH_SWAP) $$line; \
-	done < $(TESTS_DIR)/$@.txt
+all: $(PUSH_SWAP)
+	./test_mac
 
 $(PUSH_SWAP): 
-	@echo "Building push_swap"
 	$(MAKE) -C $(PUSH_SWAP_DIR)
 
 clean:
-	$(MAKE) -C $(PUSH_SWAP_DIR) clean
+	$(MAKE) clean -C $(PUSH_SWAP_DIR)
 
 fclean:
-	$(MAKE) -C $(PUSH_SWAP_DIR) fclean
+	$(MAKE) fclean -C $(PUSH_SWAP_DIR)
 
-re: fclean all
+re: fclean $(PUSH_SWAP)
