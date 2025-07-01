@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/01 18:58:20 by leberton          #+#    #+#             */
+/*   Updated: 2025/07/01 18:58:38 by leberton         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <limits.h>
-#include <string.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <limits.h>
+# include <string.h>
 
 typedef struct s_list
 {
@@ -45,6 +56,5 @@ int			is_sorted(t_list **list);
 void		sort_list(t_list **list_a, t_list **list_b);
 void		argv_checker(int argc, char **argv);
 t_list		*create_list_from_args(int argc, char **argv);
-
 
 #endif 

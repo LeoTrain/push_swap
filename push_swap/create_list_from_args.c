@@ -12,14 +12,14 @@
 
 #include "push_swap.h"
 
-static void ft_free_list(t_list *list, char **temp, int argc)	
+static void	ft_free_list(t_list *list, char **temp, int argc)
 {
 	ft_lstclear(&list, free);
 	if (argc == 2)
 		ft_free_split(temp);
 }
 
-static int add_arg_to_list(t_list **list_a, char **temp, int i, int argc)
+static int	add_arg_to_list(t_list **list_a, char **temp, int i, int argc)
 {
 	t_list	*new;
 
@@ -33,7 +33,7 @@ static int add_arg_to_list(t_list **list_a, char **temp, int i, int argc)
 	return (1);
 }
 
-t_list *create_list_from_args(int argc, char **argv)
+t_list	*create_list_from_args(int argc, char **argv)
 {
 	int		i;
 	t_list	*list_a;
@@ -53,12 +53,9 @@ t_list *create_list_from_args(int argc, char **argv)
 		temp = argv;
 	}
 	while (temp[i])
-	{
-		if (!add_arg_to_list(&list_a, temp, i, argc))
+		if (!add_arg_to_list(&list_a, temp, i++, argc))
 			return (NULL);
-		i++;
-	}
 	if (argc == 2)
 		ft_free_split(temp);
-	return(list_a);
+	return (list_a);
 }

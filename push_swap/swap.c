@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:52:49 by leberton          #+#    #+#             */
-/*   Updated: 2025/05/22 16:56:21 by leberton         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:01:07 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	swap(t_list **list)
 {
-	t_list *first;
-	t_list *second;
+	t_list	*first;
+	t_list	*second;
 
 	if (!*list || !(*list)->next)
 		return ;

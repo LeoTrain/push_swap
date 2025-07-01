@@ -6,25 +6,11 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:10:34 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 23:18:41 by leberton         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:00:51 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
-
-int	find_bits(int biggest_nbr)
-{
-	int	max_bits;
-
-	max_bits = 0;
-	while (biggest_nbr > 0)
-	{
-		biggest_nbr >>= 1;
-		max_bits++;
-	}
-	return (max_bits);
-}
 
 static int	find_position_of_lowest(t_list *list)
 {
@@ -50,10 +36,13 @@ static int	find_position_of_lowest(t_list *list)
 
 void	sort_three(t_list **list)
 {
-	int	first = (*list)->content;
-	int	second = (*list)->next->content;
-	int	third = (*list)->next->next->content;
+	int	first;
+	int	second;
+	int	third;
 
+	first = (*list)->content;
+	second = (*list)->next->content;
+	third = (*list)->next->next->content;
 	if (first > second && second < third && first < third)
 		swap_a(list);
 	else if (first > second && second > third)
@@ -72,10 +61,10 @@ void	sort_three(t_list **list)
 		rotate_reverse_a(list);
 }
 
-static void simple_sort(t_list **list_a, t_list **list_b)
+static void	simple_sort(t_list **list_a, t_list **list_b)
 {
-	int lowest_pos;
-	int size;
+	int	lowest_pos;
+	int	size;
 
 	while (*list_a)
 	{

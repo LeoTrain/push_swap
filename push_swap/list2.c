@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   list2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 08:55:05 by leberton          #+#    #+#             */
-/*   Updated: 2025/07/01 18:57:44 by leberton         ###   ########.fr       */
+/*   Created: 2025/07/01 18:56:29 by leberton          #+#    #+#             */
+/*   Updated: 2025/07/01 18:56:47 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list	*list_a;
-	t_list	*list_b;
+	t_list	*tmp;
 
-	if (argc < 2)
-		return (0);
-	argv_checker(argc, argv);
-	list_a = create_list_from_args(argc, argv);
-	list_b = NULL;
-	assign_indexes(list_a, ft_lstsize(list_a));
-	sort_list(&list_a, &list_b);
-	return (0);
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		free(*lst);
+		*lst = tmp;
+	}
+	*lst = NULL;
 }

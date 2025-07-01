@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:53:28 by leberton          #+#    #+#             */
-/*   Updated: 2025/05/22 16:55:19 by leberton         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:58:57 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	rotate(t_list **tab)
 {
-	t_list *first;
-	t_list *last;
+	t_list	*first;
+	t_list	*last;
 
 	if (!*tab || !(*tab)->next)
 		return ;

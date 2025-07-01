@@ -42,7 +42,7 @@ int	ft_atoi(const char *nptr)
 	return (result * sign);
 }
 
-long long ft_atoll(const char *nptr)
+long long	ft_atoll(const char *nptr)
 {
 	int			i;
 	int			sign;
@@ -69,7 +69,7 @@ long long ft_atoll(const char *nptr)
 
 void	ft_free_split(char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (split[i])
