@@ -32,7 +32,7 @@ static int	doubles_checker(char **argv, int length)
 	return (0);
 }
 
-static int number_checker(char *arg)
+static int	number_checker(char *arg)
 {
 	int	i;
 
@@ -48,6 +48,16 @@ static int number_checker(char *arg)
 	return (0);
 }
 
+static int	get_array_length(char **array)
+{
+	int	length;
+
+	length = 0;
+	while (array[length])
+		length++;
+	return (length);
+}
+
 void	assign_indexes(t_list *head, int link_size)
 {
 	t_list	*biggest;
@@ -59,7 +69,8 @@ void	assign_indexes(t_list *head, int link_size)
 		temp = head;
 		while (temp)
 		{
-			if (!temp->index && (biggest == NULL || temp->content > biggest->content))
+			if (!temp->index && (biggest == NULL
+					|| temp->content > biggest->content))
 				biggest = temp;
 			temp = temp->next;
 		}
@@ -89,9 +100,7 @@ void	argv_checker(int argc, char **argv)
 			ft_puterror("ERROR");
 		i++;
 	}
-	length = 0;
-	while (temp[length])
-		length++;
+	length = get_array_length(temp);
 	if (doubles_checker(temp, length))
 		ft_puterror("ERROR");
 	if (argc == 2)

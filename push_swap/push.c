@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:54:31 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 22:14:51 by leberton         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:58:02 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	push(t_list **from, t_list **to)
 {
-	t_list *list_ptr;
+	t_list	*list_ptr;
 
 	if (from == NULL || *from == NULL)
 		return ;
