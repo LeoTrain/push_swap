@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 08:25:38 by leberton          #+#    #+#             */
-/*   Updated: 2025/06/30 21:05:29 by leberton         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:16:54 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	number_checker(char *arg)
 	int	i;
 
 	i = 0;
-	if (arg[i] == '-')
+	if (arg[i] == '-' || arg[i] == '+')
 		i++;
 	while (arg[i])
 	{
@@ -95,14 +95,14 @@ void	argv_checker(int argc, char **argv)
 	{
 		temp_arg = ft_atoi(temp[i]);
 		if (temp_arg < INT_MIN || temp_arg > INT_MAX)
-			ft_puterror("ERROR");
+			ft_puterror("Error", 1);
 		if (number_checker(temp[i]))
-			ft_puterror("ERROR");
+			ft_puterror("Error", 2);
 		i++;
 	}
 	length = get_array_length(temp);
 	if (doubles_checker(temp, length))
-		ft_puterror("ERROR");
+		ft_puterror("Error", 3);
 	if (argc == 2)
 		ft_free_split(temp);
 }

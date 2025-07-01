@@ -6,42 +6,31 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:56:58 by leberton          #+#    #+#             */
-/*   Updated: 2025/07/01 19:02:09 by leberton         ###   ########.fr       */
+/*   Updated: 2025/07/01 20:23:27 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_puterror(char *str)
+int	ft_puterror(char *str, int error)
 {
 	while (*str)
 		write(1, str++, 1);
 	write(1, "\n", 1);
-	exit(1);
+	exit(error);
 }
 
-int	find_position_of_lowest(t_list *lst)
+int	find_bits(int biggest_nbr)
 {
-	int		min;
-	int		pos;
-	int		i;
-	t_list	*tmp;
+	int	max_bits;
 
-	pos = 0;
-	i = 0;
-	tmp = lst;
-	min = lst->content;
-	while (tmp)
+	max_bits = 0;
+	while (biggest_nbr > 0)
 	{
-		if (tmp->content < min)
-		{
-			min = tmp->content;
-			pos = i;
-		}
-		tmp = tmp->next;
-		i++;
+		biggest_nbr >>= 1;
+		max_bits++;
 	}
-	return (pos);
+	return (max_bits);
 }
 
 int	is_sorted(t_list **list)
@@ -58,6 +47,29 @@ int	is_sorted(t_list **list)
 	return (1);
 }
 
+int	find_position_of_lowest(t_list *list)
+{
+	int	lowest_value;
+	int	lowest_pos;
+	int	current_pos;
+
+	lowest_value = INT_MAX;
+	lowest_pos = 0;
+	current_pos = 0;
+	while (list)
+	{
+		if (list->index < lowest_value)
+		{
+			lowest_value = list->index;
+			lowest_pos = current_pos;
+		}
+		list = list->next;
+		current_pos++;
+	}
+	return (lowest_pos);
+}
+
+
 int	find_biggest(t_list *list)
 {
 	int		big;
@@ -72,17 +84,4 @@ int	find_biggest(t_list *list)
 		temp = temp->next;
 	}
 	return (big);
-}
-
-int	find_bits(int biggest_nbr)
-{
-	int	max_bits;
-
-	max_bits = 0;
-	while (biggest_nbr > 0)
-	{
-		biggest_nbr >>= 1;
-		max_bits++;
-	}
-	return (max_bits);
 }

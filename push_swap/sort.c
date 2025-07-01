@@ -6,33 +6,11 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:10:34 by leberton          #+#    #+#             */
-/*   Updated: 2025/07/01 19:00:51 by leberton         ###   ########.fr       */
+/*   Updated: 2025/07/01 20:23:46 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static int	find_position_of_lowest(t_list *list)
-{
-	int	lowest_value;
-	int	lowest_pos;
-	int	current_pos;
-
-	lowest_value = INT_MAX;
-	lowest_pos = 0;
-	current_pos = 0;
-	while (list)
-	{
-		if (list->index < lowest_value)
-		{
-			lowest_value = list->index;
-			lowest_pos = current_pos;
-		}
-		list = list->next;
-		current_pos++;
-	}
-	return (lowest_pos);
-}
 
 void	sort_three(t_list **list)
 {
