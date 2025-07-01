@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:58:20 by leberton          #+#    #+#             */
-/*   Updated: 2025/07/01 18:58:38 by leberton         ###   ########.fr       */
+/*   Updated: 2025/07/01 20:23:46 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_list		*ft_lstlast(t_list *lst);
 t_list		*ft_lstnew(int content);
 int			ft_lstsize(t_list *lst);
 void		ft_lstclear(t_list **lst, void (*del)(void *));
-int			ft_puterror(char *str);
+int			ft_puterror(char *str, int error);
 void		ft_free_split(char **split);
 
 void		swap_a(t_list **list);
@@ -50,6 +50,8 @@ void		rotate_reverse_ab(t_list **list_a, t_list **list_b);
 void		push_a(t_list **list_a, t_list **list_b);
 void		push_b(t_list **list_a, t_list **list_b);
 
+int			find_bits(int biggest_nbr);
+int			find_position_of_lowest(t_list *list);
 void		assign_indexes(t_list *head, int link_size);
 int			find_biggest(t_list *list);
 int			is_sorted(t_list **list);
