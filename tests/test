@@ -12,8 +12,8 @@ print_header() {
 run_tests() {
     local TESTS=$1
     local NUMBERS=$2
-    local INT_MIN=-2147483648
-    local INT_MAX=2147483647
+    local INT_MIN=-10000
+    local INT_MAX=10000
     local total_moves=0
     print_header "Testing $NUMBERS elements ($TESTS runs)"
 
@@ -26,13 +26,18 @@ run_tests() {
 			exit 1
 		fi
         output=$($PUSH_SWAP $args)
-        moves=$(echo "$output" | wc -l)
-        result=$(echo "$output" | $CHECKER $args)
+		if [ -z "$output" ]; then
+			moves=0
+			result=$(echo -n "" | $CHECKER $args)
+		else
+			moves=$(echo "$output" | wc -l)
+			result=$(echo "$output" | $CHECKER $args)
+		fi
 
 		if [[ $result != "OK" ]]; then
 			printf "    \e[38;5;196m[  0%%]\e[0m "
+			failed_tests+=("$i:$args:$moves")
 			moves=$((moves + 100000))
-			failed_tests+=("$i:$args")
 			printf "\n\e[31m[DEBUG] push_swap output:\e[0m\n$output\n"
         else
             if (( NUMBERS <= 3 )); then
@@ -167,10 +172,10 @@ test_no_args() {
     printf "\n\033[1;36m═══════════════════════════════════════════════════\033[0m\n"
 }
 
-run_tests 10 3
-run_tests 10 5
-run_tests 10 10
-run_tests 10 50
+run_tests 25 3
+run_tests 25 5
+run_tests 25 10
+run_tests 25 50
 run_tests 25 100
 run_tests 25 500
 test_invalid_inputs
