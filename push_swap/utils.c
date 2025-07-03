@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	ft_puterror(char *str, int error)
+int	exit_with_error(char *str, int error)
 {
 	while (*str)
 		write(1, str++, 1);
@@ -20,7 +20,7 @@ int	ft_puterror(char *str, int error)
 	exit(error);
 }
 
-int	find_bits(int biggest_nbr)
+int	bit_length(int biggest_nbr)
 {
 	int	max_bits;
 
@@ -33,7 +33,7 @@ int	find_bits(int biggest_nbr)
 	return (max_bits);
 }
 
-int	is_sorted(t_list **list)
+int	list_is_sorted(t_list **list)
 {
 	t_list	*temp;
 
@@ -47,7 +47,7 @@ int	is_sorted(t_list **list)
 	return (1);
 }
 
-int	find_position_of_lowest(t_list *list)
+int	lowest_index_position(t_list *list)
 {
 	int	lowest_value;
 	int	lowest_pos;
@@ -70,7 +70,7 @@ int	find_position_of_lowest(t_list *list)
 }
 
 
-int	find_biggest(t_list *list)
+int	max_index(t_list *list)
 {
 	int		big;
 	t_list	*temp;
