@@ -1,18 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_checker.c                                      :+:      :+:    :+:   */
+/*   arg_checker_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 08:25:38 by leberton          #+#    #+#             */
-/*   Updated: 2025/07/01 19:16:54 by leberton         ###   ########.fr       */
+/*   Created: 2025/07/04 00:54:26 by leberton          #+#    #+#             */
+/*   Updated: 2025/07/04 00:55:11 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	doubles_checker(char **argv, int length)
+int	array_length(char **array)
+{
+	int	length;
+
+	length = 0;
+	while (array[length])
+		length++;
+	return (length);
+}
+
+void	error_if_empty_args(int argc, char **argv)
+{
+	if (argc >= 2)
+		if (*argv[1] == '\0')
+			exit_with_error("Error", 1);
+}
+
+int	has_duplicates(char **argv, int length)
 {
 	int	i;
 	int	j;
@@ -32,7 +49,7 @@ static int	doubles_checker(char **argv, int length)
 	return (0);
 }
 
-static int	number_checker(char *arg)
+int	is_valid_number(char *arg)
 {
 	int	i;
 
@@ -48,17 +65,7 @@ static int	number_checker(char *arg)
 	return (0);
 }
 
-static int	get_array_length(char **array)
-{
-	int	length;
-
-	length = 0;
-	while (array[length])
-		length++;
-	return (length);
-}
-
-void	assign_indexes(t_list *head, int link_size)
+void	assign_list_indexes(t_list *head, int link_size)
 {
 	t_list	*biggest;
 	t_list	*temp;
@@ -77,32 +84,4 @@ void	assign_indexes(t_list *head, int link_size)
 		if (biggest)
 			biggest->index = link_size;
 	}
-}
-
-void	argv_checker(int argc, char **argv)
-{
-	int		i;
-	long	temp_arg;
-	int		length;
-	char	**temp;
-
-	i = 0;
-	if (argc == 2)
-		temp = ft_split(argv[1], ' ');
-	else
-		temp = argv + 1;
-	while (temp[i])
-	{
-		temp_arg = ft_atoi(temp[i]);
-		if (temp_arg < INT_MIN || temp_arg > INT_MAX)
-			ft_puterror("Error", 1);
-		if (number_checker(temp[i]))
-			ft_puterror("Error", 2);
-		i++;
-	}
-	length = get_array_length(temp);
-	if (doubles_checker(temp, length))
-		ft_puterror("Error", 3);
-	if (argc == 2)
-		ft_free_split(temp);
 }

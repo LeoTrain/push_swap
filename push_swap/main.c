@@ -19,10 +19,10 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (0);
-	argv_checker(argc, argv);
+	validate_args(argc, argv);
 	list_a = create_list_from_args(argc, argv);
 	list_b = NULL;
-	assign_indexes(list_a, ft_lstsize(list_a));
+	assign_list_indexes(list_a, ft_lstsize(list_a));
 	sort_list(&list_a, &list_b);
 	return (0);
 }

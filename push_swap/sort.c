@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	sort_three(t_list **list)
+static void	sort_three_elements(t_list **list)
 {
 	int	first;
 	int	second;
@@ -39,7 +39,7 @@ void	sort_three(t_list **list)
 		rotate_reverse_a(list);
 }
 
-static void	simple_sort(t_list **list_a, t_list **list_b)
+static void	insertion_sort(t_list **list_a, t_list **list_b)
 {
 	int	lowest_pos;
 	int	size;
@@ -47,7 +47,7 @@ static void	simple_sort(t_list **list_a, t_list **list_b)
 	while (*list_a)
 	{
 		size = ft_lstsize(*list_a);
-		lowest_pos = find_position_of_lowest(*list_a);
+		lowest_pos = lowest_index_position(*list_a);
 		if (lowest_pos <= size / 2)
 			while (lowest_pos-- > 0)
 				rotate_a(list_a);
@@ -63,7 +63,7 @@ static void	simple_sort(t_list **list_a, t_list **list_b)
 		push_a(list_a, list_b);
 }
 
-static void	radinx_sort(t_list **list_a, t_list **list_b)
+static void	radix_sort(t_list **list_a, t_list **list_b)
 {
 	int	biggest;
 	int	max_bits;
@@ -72,8 +72,8 @@ static void	radinx_sort(t_list **list_a, t_list **list_b)
 	int	size;
 
 	i = 0;
-	biggest = find_biggest(*list_a);
-	max_bits = find_bits(biggest);
+	biggest = max_index(*list_a);
+	max_bits = bit_length(biggest);
 	size = ft_lstsize(*list_a);
 	while (i < max_bits)
 	{
@@ -97,12 +97,12 @@ void	sort_list(t_list **list_a, t_list **list_b)
 	int	size;
 
 	size = ft_lstsize(*list_a);
-	if (size == 2 && !is_sorted(list_a))
+	if (size == 2 && !list_is_sorted(list_a))
 		swap_a(list_a);
 	else if (size == 3)
-		sort_three(list_a);
-	else if (!is_sorted(list_a) && size <= 20)
-		simple_sort(list_a, list_b);
-	else if (!is_sorted(list_a))
-		radinx_sort(list_a, list_b);
+		sort_three_elements(list_a);
+	else if (!list_is_sorted(list_a) && size <= 20)
+		insertion_sort(list_a, list_b);
+	else if (!list_is_sorted(list_a))
+		radix_sort(list_a, list_b);
 }
