@@ -24,9 +24,23 @@ int	array_length(char **array)
 
 void	error_if_empty_args(int argc, char **argv)
 {
-	if (argc >= 2)
-		if (*argv[1] == '\0')
+	char *str;
+
+	str = argv[1];
+	if (argc < 2)
+		exit(0);
+	else if (argc >= 2)
+	{
+		if (!str || *str == '\0')
 			exit_with_error("Error", 1);
+		while(*str)
+		{
+			if (*str != ' ' && (*str < 9 || *str > 13))
+				return ;
+			str[1]++;
+		}
+		exit_with_error("Error", 1);
+	}
 }
 
 int	has_duplicates(char **argv, int length)
