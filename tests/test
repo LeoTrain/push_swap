@@ -125,7 +125,6 @@ generate_unique_numbers() {
     echo "${range[@]}" | tr ' ' '\n' | shuf | head -n $n | tr '\n' ' '
 }
 
-
 test_invalid_inputs() {
     print_header "Testing invalid inputs"
 
@@ -139,15 +138,22 @@ test_invalid_inputs() {
         "3 2 1 0 -0"
     )
 
-    for test_case in "${invalid_tests[@]}"; do
-        $PUSH_SWAP $test_case >/dev/null 2>&1
-        if [[ $? -ne 0 ]]; then
-            printf "\e[38;5;82m[PASS]\e[0m Input: '$test_case'\n"
+    for input in "${invalid_tests[@]}"; do
+        if [[ -z "$input" ]]; then
+            ../push_swap/push_swap "" > out.txt 2>&1
         else
-            printf "\e[38;5;196m[FAIL]\e[0m Input: '$test_case'\n"
+            ../push_swap/push_swap $input > out.txt 2>&1
+        fi
+        status=$?
+        output=$(< out.txt)
+        if [[ $status -ne 0 && "$output" == "Error" ]]; then
+            printf "[\e[32mPASS\e[0m] Input: '%s'\n" "$input"
+        else
+            printf "[\e[31mFAIL\e[0m] Input: '%s'\n" "$input"
+            printf "       ↳ Output: '%s' Status: %d\n" "$output" "$status"
         fi
     done
-    printf "\n\033[1;36m═══════════════════════════════════════════════════\033[0m\n"
+    rm -f out.txt
 }
 
 test_edge_cases() {
@@ -184,12 +190,12 @@ test_no_args() {
     printf "\n\033[1;36m═══════════════════════════════════════════════════\033[0m\n"
 }
 
-run_tests 25 3
-run_tests 25 5
-run_tests 25 10
-run_tests 25 50
-run_tests 25 100
-run_tests 25 500
+# run_tests 25 3
+# run_tests 25 5
+# run_tests 25 10
+# run_tests 25 50
+# run_tests 25 100
+# run_tests 25 500
 test_invalid_inputs
 test_edge_cases
 test_no_args

@@ -12,6 +12,18 @@
 
 #include "push_swap.h"
 
+static void	generate_temp_arguments(int argc, char **argv, char ***temp)
+{
+	if (argc == 2)
+	{
+		*temp = ft_split(argv[1], ' ');
+		if (!temp || !temp[0])
+			exit_with_error("Error", 1);
+	}
+	else
+		*temp = argv + 1;
+}
+
 void	validate_args(int argc, char **argv)
 {
 	int		i;
@@ -22,7 +34,7 @@ void	validate_args(int argc, char **argv)
 	i = 0;
 	error_if_empty_args(argc, argv);
 	if (argc == 2)
-		temp = ft_split(argv[1], ' ');
+		generate_temp_arguments(argc, argv, &temp);
 	else
 		temp = argv + 1;
 	while (temp[i])
