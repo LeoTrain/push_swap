@@ -18,7 +18,9 @@ static void	generate_temp_arguments(int argc, char **argv, char ***temp)
 	{
 		*temp = ft_split(argv[1], ' ');
 		if (!temp || !temp[0])
+		{
 			exit_with_error("Error", 1);
+		}
 	}
 	else
 		*temp = argv + 1;

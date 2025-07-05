@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdlib.h>
 
 int	main(int argc, char **argv)
 {
@@ -24,5 +25,7 @@ int	main(int argc, char **argv)
 	list_b = NULL;
 	assign_list_indexes(list_a, ft_lstsize(list_a));
 	sort_list(&list_a, &list_b);
+	ft_lstclear(&list_a, free);
+	ft_lstclear(&list_b, free);
 	return (0);
 }

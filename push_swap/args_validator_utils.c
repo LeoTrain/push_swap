@@ -37,7 +37,7 @@ void	error_if_empty_args(int argc, char **argv)
 		{
 			if (*str != ' ' && (*str < 9 || *str > 13))
 				return ;
-			str[1]++;
+			str++;
 		}
 		exit_with_error("Error", 1);
 	}
