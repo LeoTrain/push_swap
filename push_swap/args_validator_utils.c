@@ -65,9 +65,13 @@ int	has_duplicates(char **argv, int length)
 
 int	is_valid_number(char *arg)
 {
-	int	i;
+	int			i;
+	long long	temp_arg;
 
 	i = 0;
+	temp_arg = ft_atoll(arg);
+	if (temp_arg < INT_MIN || temp_arg > INT_MAX)
+		return (1);
 	if (arg[i] == '-' || arg[i] == '+')
 		i++;
 	while (arg[i])
