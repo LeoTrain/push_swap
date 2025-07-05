@@ -136,6 +136,12 @@ test_invalid_inputs() {
         "2147483648"
         "-2147483649"
         "3 2 1 0 -0"
+		"0 -0"
+		"42 +42"
+		"001 1"
+		"12a3"
+		"1 2 '' 3"
+		"1,2,3"
     )
 
     for input in "${invalid_tests[@]}"; do
@@ -157,12 +163,19 @@ test_invalid_inputs() {
 }
 
 test_edge_cases() {
-    print_header "Testing special cases with checker"
+    print_header "Testing edge cases"
 
     declare -a cases=(
-        "1 2 3 4 5"        # already sorted
-        "5 4 3 2 1"        # reverse order
-        "2 1 3"            # small input
+        "1 2 3 4 5"
+		"1 2 3 5 4"
+        "5 4 3 2 1"
+        "2 1 3"
+		"2 1"
+		"2147483647"
+		"-2147483648"
+		"0"
+		"-0"
+		"0042"
     )
 
     for args in "${cases[@]}"; do
@@ -190,13 +203,71 @@ test_no_args() {
     printf "\n\033[1;36m═══════════════════════════════════════════════════\033[0m\n"
 }
 
-# run_tests 25 3
-# run_tests 25 5
-# run_tests 25 10
-# run_tests 25 50
-# run_tests 25 100
-# run_tests 25 500
+test_memory_leaks() {
+    print_header "Testing memory leaks"
+    declare -a memory_tests=(
+        "1 2 3 4 5"
+        "5 4 3 2 1"
+        "10 9 8 7 6 5 4 3 2 1"
+        "-500 0 500 -1000 1000"
+		""
+		" "
+		"	"
+		"1 1 2 3"
+		"2147483647"
+		"-2147483648"
+		"2147483648"
+		"-2147483649"
+		"1 2 3 4 5 6 7 8 9 10"
+		"10 1 9 2 8 3 7 4 6 5"
+		"1000 999 998 997 996"
+		"1 2 a c 3"
+		"a b c d e f"
+		"2147483647 -2147483648 2147483649"
+		"1 2 3 5, 8"
+		"42"
+    )
+
+    for input in "${memory_tests[@]}"; do
+        if [[ "$(uname)" == "Darwin" ]]; then
+            leaks_output=$(leaks --atExit -- ../push_swap/push_swap $input 2>&1)
+            leaks_summary=$(echo "$leaks_output" | grep -E "Process [0-9]+: [0-9]+ leaks")
+            if echo "$leaks_summary" | grep -q "0 leaks"; then
+                printf "[\e[32mPASS\e[0m] Memory test on input: '%s'\n" "$input"
+            else
+                printf "[\e[31mFAIL\e[0m] Memory leaks detected on input: '%s'\n" "$input"
+                echo "────────────────────────────────────────────"
+                echo "$leaks_summary"
+                echo "────────────────────────────────────────────"
+            fi
+        else
+            valgrind --leak-check=full --error-exitcode=42 \
+                ../push_swap/push_swap $input > /dev/null 2> valgrind.log
+            status=$?
+            if [[ $status -eq 0 ]]; then
+                printf "[\e[32mPASS\e[0m] Memory test on input: '%s'\n" "$input"
+            else
+                printf "[\e[31mFAIL\e[0m] Memory leaks detected on input: '%s'\n" "$input"
+                echo "       ↳ Check valgrind.log for details."
+                echo "────────────────────────────────────────────"
+                grep -A20 -E "HEAP SUMMARY|LEAK SUMMARY" valgrind.log || cat valgrind.log
+                echo "────────────────────────────────────────────"
+            fi
+        fi
+    done
+
+    rm -f valgrind.log 2>/dev/null || true
+}
+
+clear
+run_tests 10 3
+run_tests 10 5
+run_tests 10 10
+run_tests 10 50
+run_tests 25 100
+run_tests 25 500
+
 test_invalid_inputs
 test_edge_cases
 test_no_args
-
+test_memory_leaks
