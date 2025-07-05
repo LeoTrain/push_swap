@@ -20,7 +20,7 @@ run_tests() {
     local failed_tests=()
     for ((i=1; i<=TESTS; i++)); do
 		SHUF=$(command -v gshuf || command -v shuf)
-		args=$(./rand_unique.py $NUMBERS $INT_MIN $INT_MAX)
+		args=$(generate_unique_numbers $NUMBERS $INT_MIN $INT_MAX)
 		if [[ -z "$args" ]]; then
 			echo -e "\e[31m[ERROR] Failed to generate args for $NUMBERS elements\e[0m"
 			exit 1
@@ -113,6 +113,18 @@ run_tests() {
     esac
     printf "\033[1;36m═══════════════════════════════════════════════════\033[0m\n\n"
 }
+generate_unique_numbers() {
+    local n=$1
+    local min=$2
+    local max=$3
+    local range=()
+    
+    for ((i=min; i<=max; i++)); do
+        range+=($i)
+    done
+    echo "${range[@]}" | tr ' ' '\n' | shuf | head -n $n | tr '\n' ' '
+}
+
 
 test_invalid_inputs() {
     print_header "Testing invalid inputs"
