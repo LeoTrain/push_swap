@@ -28,6 +28,7 @@ typedef struct s_list
 char		**ft_split(const char *s, char c);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
+long long	ft_atoll(const char *nptr);
 void		ft_lstadd_back(t_list **lst, t_list *new_list);
 void		ft_lstadd_front(t_list **lst, t_list *new_list);
 t_list		*ft_lstlast(t_list *lst);
