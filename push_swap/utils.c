@@ -69,7 +69,6 @@ int	lowest_index_position(t_list *list)
 	return (lowest_pos);
 }
 
-
 int	max_index(t_list *list)
 {
 	int		big;

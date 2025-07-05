@@ -24,7 +24,7 @@ int	array_length(char **array)
 
 void	error_if_empty_args(int argc, char **argv)
 {
-	char *str;
+	char	*str;
 
 	str = argv[1];
 	if (argc < 2)
@@ -33,7 +33,7 @@ void	error_if_empty_args(int argc, char **argv)
 	{
 		if (!str || *str == '\0')
 			exit_with_error("Error", 1);
-		while(*str)
+		while (*str)
 		{
 			if (*str != ' ' && (*str < 9 || *str > 13))
 				return ;
