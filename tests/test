@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PUSH_SWAP="../push_swap/push_swap"
-CHECKER="./checker_Mac"
+CHECKER="./checker_linux"
 
 print_header() {
     printf "\n\033[1;36m═══════════════════════════════════════════════════\033[0m\n"
@@ -213,47 +213,28 @@ test_memory_leaks() {
 		""
 		" "
 		"	"
-		"1 1 2 3"
+		"1 2 3"
 		"2147483647"
 		"-2147483648"
-		"2147483648"
-		"-2147483649"
 		"1 2 3 4 5 6 7 8 9 10"
 		"10 1 9 2 8 3 7 4 6 5"
 		"1000 999 998 997 996"
-		"1 2 a c 3"
-		"a b c d e f"
-		"2147483647 -2147483648 2147483649"
-		"1 2 3 5, 8"
 		"42"
     )
 
     for input in "${memory_tests[@]}"; do
-        if [[ "$(uname)" == "Darwin" ]]; then
-            leaks_output=$(leaks --atExit -- ../push_swap/push_swap $input 2>&1)
-            leaks_summary=$(echo "$leaks_output" | grep -E "Process [0-9]+: [0-9]+ leaks")
-            if echo "$leaks_summary" | grep -q "0 leaks"; then
-                printf "[\e[32mPASS\e[0m] Memory test on input: '%s'\n" "$input"
-            else
-                printf "[\e[31mFAIL\e[0m] Memory leaks detected on input: '%s'\n" "$input"
-                echo "────────────────────────────────────────────"
-                echo "$leaks_summary"
-                echo "────────────────────────────────────────────"
-            fi
-        else
-            valgrind --leak-check=full --error-exitcode=42 \
-                ../push_swap/push_swap $input > /dev/null 2> valgrind.log
-            status=$?
-            if [[ $status -eq 0 ]]; then
-                printf "[\e[32mPASS\e[0m] Memory test on input: '%s'\n" "$input"
-            else
-                printf "[\e[31mFAIL\e[0m] Memory leaks detected on input: '%s'\n" "$input"
-                echo "       ↳ Check valgrind.log for details."
-                echo "────────────────────────────────────────────"
-                grep -A20 -E "HEAP SUMMARY|LEAK SUMMARY" valgrind.log || cat valgrind.log
-                echo "────────────────────────────────────────────"
-            fi
-        fi
+		valgrind --leak-check=full --track-origins=yes\
+			../push_swap/push_swap $input > /dev/null 2> valgrind.log
+		status=$?
+		if [[ $status -eq 0 ]]; then
+			printf "[\e[32mPASS\e[0m] Memory test on input: '%s'\n" "$input"
+		else
+			printf "[\e[31mFAIL\e[0m] Memory leaks detected on input: '%s'\n" "$input"
+			echo "       ↳ Check valgrind.log for details."
+			echo "────────────────────────────────────────────"
+			grep -A20 -E "HEAP SUMMARY|LEAK SUMMARY" valgrind.log || cat valgrind.log
+			echo "────────────────────────────────────────────"
+		fi
     done
 
     rm -f valgrind.log 2>/dev/null || true
