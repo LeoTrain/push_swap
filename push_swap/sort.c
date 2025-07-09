@@ -39,28 +39,54 @@ static void	sort_three_elements(t_list **list)
 		rotate_reverse_a(list);
 }
 
-static void	insertion_sort(t_list **list_a, t_list **list_b)
+static int	find_min_index(t_list *list)
 {
-	int	lowest_pos;
-	int	size;
+	int		i = 0;
+	int		min_index = -1;
+	int		min_value = INT_MAX;
+	t_list	*current = list;
 
-	while (*list_a)
+	while (current)
 	{
-		size = ft_lstsize(*list_a);
-		lowest_pos = lowest_index_position(*list_a);
-		if (lowest_pos <= size / 2)
-			while (lowest_pos-- > 0)
-				rotate_a(list_a);
-		else
+		if ((int)current->content < min_value)
 		{
-			lowest_pos = size - lowest_pos;
-			while (lowest_pos-- > 0)
-				rotate_reverse_a(list_a);
+			min_value = (int)current->content;
+			min_index = i;
 		}
-		push_b(list_a, list_b);
+		current = current->next;
+		i++;
 	}
-	while (*list_b)
-		push_a(list_a, list_b);
+	return (min_index);
+}
+
+static void	push_min_to_b(t_list **list_a, t_list **list_b)
+{
+	int		min_index;
+	int		size;
+	
+	min_index = find_min_index(*list_a);
+	size = ft_lstsize(*list_a);
+	if (min_index <= size / 2)
+		while (min_index-- > 0)
+			rotate_a(list_a);
+	else
+		while (min_index++ < size)
+			rotate_reverse_a(list_a);
+	push_b(list_a, list_b);
+}
+
+void	sort_five_elements(t_list **a, t_list **b)
+{
+	if (ft_lstsize(*a) == 5)
+		push_min_to_b(a, b);
+	push_min_to_b(a, b);
+	sort_three_elements(a);
+	push_a(a, b);
+	if ((*a)->content > (*a)->next->content)
+		swap_a(a);
+	push_a(a, b);
+	if ((*a)->content > (*a)->next->content)
+		swap_a(a);
 }
 
 static void	radix_sort(t_list **list_a, t_list **list_b)
@@ -101,8 +127,8 @@ void	sort_list(t_list **list_a, t_list **list_b)
 		swap_a(list_a);
 	else if (size == 3)
 		sort_three_elements(list_a);
-	else if (!list_is_sorted(list_a) && size <= 20)
-		insertion_sort(list_a, list_b);
+	else if (!list_is_sorted(list_a) && size <= 5)
+		sort_five_elements(list_a, list_b);
 	else if (!list_is_sorted(list_a))
 		radix_sort(list_a, list_b);
 }

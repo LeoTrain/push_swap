@@ -18,9 +18,7 @@ static void	generate_temp_arguments(int argc, char **argv, char ***temp)
 	{
 		*temp = ft_split(argv[1], ' ');
 		if (!temp || !temp[0])
-		{
 			exit_with_error("Error", 1);
-		}
 	}
 	else
 		*temp = argv + 1;
@@ -41,11 +39,11 @@ void	validate_args(int argc, char **argv)
 		temp = argv + 1;
 	while (temp[i])
 	{
-		temp_arg = ft_atoi(temp[i]);
-		if (temp_arg < INT_MIN || temp_arg > INT_MAX)
+		if ((temp[i][0] == '-' || temp[i][0] == '+') && temp[i][1] == '\0')
 			exit_with_error("Error", 1);
-		if (is_valid_number(temp[i]))
-			exit_with_error("Error", 2);
+		temp_arg = ft_atoll(temp[i]);
+		if (temp_arg < INT_MIN || temp_arg > INT_MAX || is_valid_number(temp[i]))
+			exit_with_error("Error", 1);
 		i++;
 	}
 	length = array_length(temp);

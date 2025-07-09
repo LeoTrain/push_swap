@@ -15,7 +15,7 @@
 int	exit_with_error(char *str, int error)
 {
 	while (*str)
-		write(1, str++, 1);
+		write(2, str++, 1);
 	write(1, "\n", 1);
 	exit(error);
 }
