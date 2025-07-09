@@ -6,7 +6,7 @@
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:58:20 by leberton          #+#    #+#             */
-/*   Updated: 2025/07/01 20:23:46 by leberton         ###   ########.fr       */
+/*   Updated: 2025/07/09 11:44:56 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			bit_length(int biggest_nbr);
 int			lowest_index_position(t_list *list);
 int			max_index(t_list *list);
 int			list_is_sorted(t_list **list);
+void		push_min_to_b(t_list **list_a, t_list **list_b);
 void		sort_list(t_list **list_a, t_list **list_b);
 
 int			array_length(char **array);

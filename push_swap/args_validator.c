@@ -39,10 +39,10 @@ void	validate_args(int argc, char **argv)
 		temp = argv + 1;
 	while (temp[i])
 	{
-		if ((temp[i][0] == '-' || temp[i][0] == '+') && temp[i][1] == '\0')
-			exit_with_error("Error", 1);
 		temp_arg = ft_atoll(temp[i]);
-		if (temp_arg < INT_MIN || temp_arg > INT_MAX || is_valid_number(temp[i]))
+		if (temp_arg < INT_MIN || temp_arg > INT_MAX
+			|| is_valid_number(temp[i]) || ((temp[i][0] == '-'
+				|| temp[i][0] == '+') && temp[i][1] == '\0'))
 			exit_with_error("Error", 1);
 		i++;
 	}
