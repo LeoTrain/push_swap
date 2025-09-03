@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leberton <leberton@42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:54:31 by leberton          #+#    #+#             */
-/*   Updated: 2025/07/01 18:58:02 by leberton         ###   ########.fr       */
+/*   Created: 2025/05/23 08:55:05 by leberton          #+#    #+#             */
+/*   Updated: 2025/07/01 18:57:44 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
-static void	push(t_list **from, t_list **to)
+int	main(int argc, char **argv)
 {
-	t_list	*list_ptr;
+	t_list	*list_a;
+	t_list	*list_b;
 
-	if (from == NULL || *from == NULL)
-		return ;
-	list_ptr = *from;
-	*from = (*from)->next;
-	list_ptr->next = *to;
-	*to = list_ptr;
-}
-
-void	push_a(t_list **list_a, t_list **list_b)
-{
-	push(list_b, list_a);
-	write(1, "pa\n", 3);
-}
-
-void	push_b(t_list **list_a, t_list **list_b)
-{
-	push(list_a, list_b);
-	write(1, "pb\n", 3);
+	if (argc < 2)
+		return (0);
+	validate_args(argc, argv);
+	list_a = create_list_from_args(argc, argv);
+	list_b = NULL;
+	assign_list_indexes(list_a, ft_lstsize(list_a));
+	sort_list(&list_a, &list_b);
+	ft_lstclear(&list_a, free);
+	ft_lstclear(&list_b, free);
+	return (0);
 }
