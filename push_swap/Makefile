@@ -5,7 +5,6 @@ OBJS = $(SRCS:.c=.o)
 NAME = push_swap
 
 all: $(NAME)
-	cc $(FLAGS) -o $(NAME) $(OBJS)
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) -o $@ $^
