@@ -83,23 +83,28 @@ int	is_valid_number(char *arg)
 	return (0);
 }
 
+#include <stdio.h>
+
 void	assign_list_indexes(t_list *head, int link_size)
 {
 	t_list	*biggest;
 	t_list	*temp;
+	int		current_index;
 
-	while (link_size-- > 0)
+	current_index = link_size - 1;
+	while (current_index >= 0)
 	{
 		biggest = NULL;
 		temp = head;
 		while (temp)
 		{
-			if (!temp->index && (biggest == NULL
+			if (temp->index == -1 && (biggest == NULL
 					|| temp->content > biggest->content))
 				biggest = temp;
 			temp = temp->next;
 		}
 		if (biggest)
 			biggest->index = link_size;
+		current_index--;
 	}
 }

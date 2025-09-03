@@ -14,7 +14,7 @@
 
 static void	ft_free_list(t_list *list, char **temp, int argc)
 {
-	ft_lstclear(&list, free);
+	ft_lstclear(&list, NULL);
 	if (argc == 2)
 		ft_free_split(temp);
 }
