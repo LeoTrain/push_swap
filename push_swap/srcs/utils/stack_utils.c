@@ -1,5 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leberton <leberton@student.42vienna.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/04 15:13:10 by leberton          #+#    #+#             */
+/*   Updated: 2025/09/04 15:13:42 by leberton         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/push_swap.h"
-#include <stdlib.h>
+
+t_stack	*create_stack(void)
+{
+	t_stack	*stack;
+
+	stack = malloc(sizeof(t_stack));
+	if (!stack)
+		return (NULL);
+	stack->index = -1;
+	stack->next = NULL;
+	return (stack);
+}
 
 int	stack_size(t_stack *stack)
 {
@@ -12,15 +35,6 @@ int	stack_size(t_stack *stack)
 		stack = stack->next;
 	}
 	return (count);
-}
-
-t_stack	*get_last(t_stack *stack)
-{
-	if (!stack)
-		return (NULL);
-	while (stack->next)
-		stack = stack->next;
-	return (stack);
 }
 
 int	is_sorted(t_stack *stack)
