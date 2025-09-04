@@ -14,6 +14,12 @@ typedef struct s_stack
 
 int	stack_size(t_stack *stack);
 t_stack	*get_last(t_stack *stack);
+int	is_sorted(t_stack *stack);
+
+void	sort_small(t_stack **stack_a, t_stack **stack_b, int size);
+
+void	free_stack(t_stack *stack);
+void	cleanup_and_exit(t_stack *stack_a, t_stack *stack_b, int exit_code);
 
 // Swap operations
 void sa(t_stack **stack_a);

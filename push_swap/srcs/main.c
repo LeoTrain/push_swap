@@ -27,25 +27,34 @@ static void print_stack(t_stack *stack)
 
 int	main(int argc, char **argv)
 {
+	int		size;
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 
 	if (argc <= 1)
-		return (0);
-	if (validate_and_parse(argc, argv, &stack_a))
+		return (EXIT_SUCCESS);
+	stack_a = NULL;
+	stack_b = NULL;
+	if (validate_and_parse(argc, argv, &stack_a) == EXIT_FAILURE)
 	{
-		printf("Error: validating or parsing\n");
-		return (EXIT_FAILURE);
+		write(2, "Error: validating or parsing\n", 29);
+		cleanup_and_exit(stack_a, stack_b, EXIT_FAILURE);
 	}
-	if (has_stack_duplicates(stack_a))
+	if (has_stack_duplicates(stack_a) == EXIT_FAILURE)
 	{
-		printf("Error: stack has duplicates\n");
-		return (EXIT_FAILURE);
+		write(2, "Error: stack has duplicates\n", 28);
+		cleanup_and_exit(stack_a, stack_b, EXIT_FAILURE);
 	}
 	assign_indexes(stack_a);
+	if (is_sorted(stack_a) == EXIT_SUCCESS)
+		cleanup_and_exit(stack_a, stack_b, EXIT_SUCCESS);
+	size = stack_size(stack_a);
+	if (size <= 5)
+		sort_small(&stack_a, &stack_b, size);
+	else
+		radix_sort(&stack_a, &stack_b);
 	print_stack(stack_a);
-	radix_sort(&stack_a, &stack_b);
-	print_stack(stack_a);
+	cleanup_and_exit(stack_a, stack_b, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
 
@@ -184,12 +193,17 @@ static int	validate_and_parse_multiple(int argc, char **argv, t_stack **stack_a)
 	{
 		if (is_valid_integer(argv[i], &value) == EXIT_FAILURE)
 		{
-			printf("Error: '%s' is not a valid integer.\n", argv[i]);
+			free_stack(*stack_a);
+			*stack_a = NULL;
 			return (EXIT_FAILURE);
 		}
 		new_node = create_stack();
 		if (!new_node)
+		{
+			free_stack(*stack_a);
+			*stack_a = NULL;
 			return (EXIT_FAILURE);
+		}
 		new_node->value = value;
 		if (*stack_a == NULL)
 		{
