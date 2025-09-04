@@ -22,6 +22,9 @@ void	optimized_sort(t_stack **stack_a, t_stack **stack_b);
 void	free_stack(t_stack *stack);
 void	cleanup_and_exit(t_stack *stack_a, t_stack *stack_b, int exit_code);
 
+t_stack	*get_stack_bottom(t_stack *stack);
+t_stack	*get_stack_before_bottom(t_stack *stack);
+
 // Swap operations
 void sa(t_stack **stack_a);
 void sb(t_stack **stack_b);
