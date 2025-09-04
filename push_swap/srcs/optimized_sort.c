@@ -35,7 +35,6 @@ static void	push_chunks_to_b(t_stack **stack_a, t_stack **stack_b)
     {
         if (pushed >= size)
             break;
-        // inversé : on envoie les "grands" d’abord
         if ((*stack_a)->index >= size - chunk_max)
         {
             pb(stack_a, stack_b);
