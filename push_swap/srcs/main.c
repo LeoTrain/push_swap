@@ -34,20 +34,12 @@ void	print_stacks_final(t_stack *stack_a, t_stack *stack_b)
 {
 	t_stack	*current;
 
-	current = stack_a;
-	printf("Stack A: ");
-	while (current)
-	{
-		printf("%d ", current->value);
-		current = current->next;
-	}
-	printf("\n");
-	current = stack_b;
-	printf("Stack B: ");
-	if (!stack_b)
+	printf("Stack A (top -> bottom): ");
+	if (!stack_a)
 		printf("(empty)");
 	else
 	{
+		current = stack_a;
 		while (current)
 		{
 			printf("%d ", current->value);
@@ -55,10 +47,25 @@ void	print_stacks_final(t_stack *stack_a, t_stack *stack_b)
 		}
 	}
 	printf("\n");
+
+	printf("Stack B (top -> bottom): ");
+	if (!stack_b)
+		printf("(empty)");
+	else
+	{
+		current = stack_b;
+		while (current)
+		{
+			printf("%d ", current->value);
+			current = current->next;
+		}
+	}
+	printf("\n");
+
 	if (!stack_b)
 		printf("✅ Stack B is empty\n");
 	else
-		printf("❌ Stack B is NOT empty - contains elements!\n");
+		printf("❌ Stack B is NOT empty (%d elements)\n", stack_size(stack_b));
 }
 
 int	main(int argc, char **argv)
@@ -90,8 +97,8 @@ int	main(int argc, char **argv)
 		sort_small(&stack_a, &stack_b, size);
 	else
 		optimized_sort(&stack_a, &stack_b);
-	// print_stacks_final(stack_a, stack_b);
-	(void)print_stacks_final;
+	print_stacks_final(stack_a, stack_b);
+	// (void)print_stacks_final;
 	cleanup_and_exit(stack_a, stack_b, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
