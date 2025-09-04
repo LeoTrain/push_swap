@@ -14,8 +14,56 @@ static int		get_bit(int	number, int	bit_position);
 static int		get_max_bits(t_stack *stack);
 static void		radix_sort(t_stack	**stack_a, t_stack **stack_b);
 
+#include <stdio.h>
+
+void	print_stack(t_stack *stack_a)
+{
+	t_stack	*current;
+
+	current = stack_a;
+	printf("Stack A: ");
+	while (current)
+	{
+		printf("%d ", current->value);
+		current = current->next;
+	}
+	printf("\n");
+}
+
+void	print_stacks_final(t_stack *stack_a, t_stack *stack_b)
+{
+	t_stack	*current;
+
+	current = stack_a;
+	printf("Stack A: ");
+	while (current)
+	{
+		printf("%d ", current->value);
+		current = current->next;
+	}
+	printf("\n");
+	current = stack_b;
+	printf("Stack B: ");
+	if (!stack_b)
+		printf("(empty)");
+	else
+	{
+		while (current)
+		{
+			printf("%d ", current->value);
+			current = current->next;
+		}
+	}
+	printf("\n");
+	if (!stack_b)
+		printf("✅ Stack B is empty\n");
+	else
+		printf("❌ Stack B is NOT empty - contains elements!\n");
+}
+
 int	main(int argc, char **argv)
 {
+	(void)radix_sort;
 	int		size;
 	t_stack	*stack_a;
 	t_stack	*stack_b;
@@ -41,8 +89,9 @@ int	main(int argc, char **argv)
 	if (size <= 5)
 		sort_small(&stack_a, &stack_b, size);
 	else
-		radix_sort(&stack_a, &stack_b);
-	// print_stack(stack_a);
+		optimized_sort(&stack_a, &stack_b);
+	// print_stacks_final(stack_a, stack_b);
+	(void)print_stacks_final;
 	cleanup_and_exit(stack_a, stack_b, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
