@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leberton <leberton@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 15:13:02 by leberton          #+#    #+#             */
-/*   Updated: 2025/09/04 15:13:04 by leberton         ###   ########.fr       */
+/*   Created: 2025/09/04 15:13:28 by leberton          #+#    #+#             */
+/*   Updated: 2025/09/04 15:13:30 by leberton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/push_swap.h"
-
-void	free_stack(t_stack *stack)
+int	ft_isspace(char c)
 {
-	t_stack	*temp;
-
-	while (stack)
-	{
-		temp = stack;
-		stack = stack->next;
-		free(temp);
-	}
+	return (c == ' ' || (c >= 9 && c <= 13));
 }
 
-void	cleanup_and_exit(t_stack *stack_a, t_stack *stack_b, int exit_code)
+long	ft_atol(const char *str)
 {
-	if (stack_a)
-		free_stack(stack_a);
-	if (stack_b)
-		free_stack(stack_b);
-	exit(exit_code);
+	long	result;
+	int		sign;
+
+	result = 0;
+	sign = 1;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10 + (*str - '0');
+		str++;
+	}
+	return (result * sign);
 }

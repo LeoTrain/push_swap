@@ -1,7 +1,9 @@
 NAME = push_swap
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = srcs/main.c srcs/utils/stack_utils.c srcs/utils/errors.c srcs/small_sort.c srcs/optimized_sort.c\
+SRCS = srcs/main.c srcs/sort/small_sort.c srcs/sort/chunk_sort.c\
+	   srcs/utils/stack_utils.c srcs/utils/errors.c srcs/utils/ft.c srcs/utils/sort_utils.c srcs/utils/validate_and_parse_utils.c\
+	   srcs/validation/validate.c\
        srcs/operations/swap.c srcs/operations/push.c srcs/operations/rotate.c srcs/operations/rotate_reverse.c
 OBJS = $(SRCS:.c=.o)
 

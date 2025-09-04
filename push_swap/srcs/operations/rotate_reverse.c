@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotate_reverse.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leberton <leberton@student.42vienna.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/04 15:11:29 by leberton          #+#    #+#             */
+/*   Updated: 2025/09/04 15:11:49 by leberton         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/push_swap.h"
 
 static void	rev_rotate(t_stack **stack)
@@ -14,31 +26,18 @@ static void	rev_rotate(t_stack **stack)
 	before_tail->next = NULL;
 }
 
-/* do_rra:
-*	Brings the bottom element of stack a to the top.
-*	Prints "rra" to the standard output.
-*/
 void	rra(t_stack **stack_a)
 {
 	rev_rotate(stack_a);
 	write(1, "rra\n", 4);
 }
 
-/* do_rrb:
-*	Brings the bottom element of stack b to the top.
-*	Prints "rrb" to the standard output.
-*/
 void	rrb(t_stack **stack_b)
 {
 	rev_rotate(stack_b);
 	write(1, "rrb\n", 4);
 }
 
-/* do_rrr:
-*	Brings the bottom element of both stack a and stack be
-*	to the top of their respective stacks.
-*	Prints "rrr" to the standard output.
-*/
 void	rrr(t_stack **stack_a, t_stack **stack_b)
 {
 	rev_rotate(stack_a);
