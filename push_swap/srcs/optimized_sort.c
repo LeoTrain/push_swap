@@ -26,19 +26,19 @@ static void	push_chunks_to_b(t_stack **stack_a, t_stack **stack_b)
     int	chunk_size;
     int	pushed;
     int	chunk_max;
-    
+
     size = stack_size(*stack_a);
-	chunk_size = get_chunk_size(size);  
+    chunk_size = get_chunk_size(size);
     pushed = 0;
     chunk_max = chunk_size;
     while (*stack_a)
     {
         if (pushed >= size)
             break;
-        if ((*stack_a)->index < chunk_max)
+        if ((*stack_a)->index >= size - chunk_max)
         {
             pb(stack_a, stack_b);
-            if (*stack_b && (*stack_b)->index < chunk_max - chunk_size / 2)
+            if (*stack_b && (*stack_b)->index >= size - (chunk_max - chunk_size / 2))
                 rb(stack_b);
             pushed = 0;
             if (stack_size(*stack_b) >= chunk_max)
@@ -54,32 +54,32 @@ static void	push_chunks_to_b(t_stack **stack_a, t_stack **stack_b)
 
 static void	push_back_to_a(t_stack **stack_a, t_stack **stack_b)
 {
-    int		max_index;
-    int		max_pos;
-	int		size;
-	int		position;
-	t_stack *current;
+    int		min_index;
+    int		min_pos;
+    int		size;
+    int		position;
+    t_stack *current;
 
-	while (*stack_b)
-	{
-		size = stack_size(*stack_b);
-		max_index = -1;
-		max_pos = 0;
-		current = *stack_b;
-		position = 0;
-		while (current)
-		{
-			if (current->index > max_index)
-			{
-				max_index = current->index;
-				max_pos = position;
-			}
-			current = current->next;
-			position++;
-		}
-		smart_rotate_b(stack_b, max_pos, size);
-		pa(stack_a, stack_b);
-	}
+    while (*stack_b)
+    {
+        size = stack_size(*stack_b);
+        min_index = 2147483647;
+        min_pos = 0;
+        current = *stack_b;
+        position = 0;
+        while (current)
+        {
+            if (current->index < min_index)
+            {
+                min_index = current->index;
+                min_pos = position;
+            }
+            current = current->next;
+            position++;
+        }
+        smart_rotate_b(stack_b, min_pos, size);
+        pa(stack_a, stack_b);
+    }
 }
 
 static void	smart_rotate_b(t_stack **stack_b, int position, int size)
