@@ -90,8 +90,8 @@ int	main(int argc, char **argv)
 		sort_small(&stack_a, &stack_b, size);
 	else
 		optimized_sort(&stack_a, &stack_b);
-	// print_stacks_final(stack_a, stack_b);
-	(void)print_stacks_final;
+	print_stacks_final(stack_a, stack_b);
+	// (void)print_stacks_final;
 	cleanup_and_exit(stack_a, stack_b, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }

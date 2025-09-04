@@ -1,77 +1,47 @@
 #include "../../includes/push_swap.h"
 
-void	rra(t_stack	**stack_a)
+static void	rev_rotate(t_stack **stack)
 {
-	t_stack	*last;
-	t_stack	*second_last;
-	
-	if (!stack_a || !*stack_a || !(*stack_a)->next)
-		return ;
-	second_last = NULL;
-	last = *stack_a;
-	while (last->next)
-	{
-		second_last = last;
-		last = last->next;
-	}
-	second_last->next = NULL;
-	last->next = *stack_a;
-	*stack_a = last;
+	t_stack	*tmp;
+	t_stack	*tail;
+	t_stack	*before_tail;
+
+	tail = get_stack_bottom(*stack);
+	before_tail = get_stack_before_bottom(*stack);
+	tmp = *stack;
+	*stack = tail;
+	(*stack)->next = tmp;
+	before_tail->next = NULL;
+}
+
+/* do_rra:
+*	Brings the bottom element of stack a to the top.
+*	Prints "rra" to the standard output.
+*/
+void	rra(t_stack **stack_a)
+{
+	rev_rotate(stack_a);
 	write(1, "rra\n", 4);
 }
 
-void	rrb(t_stack	**stack_b)
+/* do_rrb:
+*	Brings the bottom element of stack b to the top.
+*	Prints "rrb" to the standard output.
+*/
+void	rrb(t_stack **stack_b)
 {
-	t_stack	*last;
-	t_stack	*second_last;
-	
-	if (!stack_b || !*stack_b || !(*stack_b)->next)
-		return ;
-	second_last = NULL;
-	last = *stack_b;
-	while (last->next)
-	{
-		second_last = last;
-		last = last->next;
-	}
-	second_last->next = NULL;
-	last->next = *stack_b;
-	*stack_b = last;
+	rev_rotate(stack_b);
 	write(1, "rrb\n", 4);
 }
 
+/* do_rrr:
+*	Brings the bottom element of both stack a and stack be
+*	to the top of their respective stacks.
+*	Prints "rrr" to the standard output.
+*/
 void	rrr(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stack	*last_a;
-	t_stack	*second_last_a;
-	t_stack	*last_b;
-	t_stack *second_last_b;
-
-	if (stack_a && *stack_a && (*stack_a)->next)
-	{
-		second_last_a = NULL;
-		last_a = *stack_a;
-		while (last_a->next)
-		{
-			second_last_a = last_a;
-			last_a = last_a->next;
-		}
-		second_last_a->next = NULL;
-		last_a->next = *stack_a;
-		*stack_a = last_a;
-	}
-	if (stack_b && *stack_b && (*stack_b)->next)
-	{
-		second_last_b = NULL;
-		last_b = *stack_b;
-		while (last_b->next)
-		{
-			second_last_b = last_b;
-			last_b = last_b->next;
-		}
-		second_last_b->next = NULL;
-		last_b->next = *stack_b;
-		*stack_b = last_b;
-	}
+	rev_rotate(stack_a);
+	rev_rotate(stack_b);
 	write(1, "rrr\n", 4);
 }
