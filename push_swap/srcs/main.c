@@ -14,17 +14,6 @@ static int		get_bit(int	number, int	bit_position);
 static int		get_max_bits(t_stack *stack);
 static void		radix_sort(t_stack	**stack_a, t_stack **stack_b);
 
-#include <stdio.h>
-
-static void print_stack(t_stack *stack)
-{
-    while (stack)
-    {
-        printf("Value: %d, Index: %d\n", stack->value, stack->index);
-        stack = stack->next;
-    }
-}
-
 int	main(int argc, char **argv)
 {
 	int		size;
@@ -37,12 +26,12 @@ int	main(int argc, char **argv)
 	stack_b = NULL;
 	if (validate_and_parse(argc, argv, &stack_a) == EXIT_FAILURE)
 	{
-		write(2, "Error: validating or parsing\n", 29);
+		write(2, "Error\n", 6);
 		cleanup_and_exit(stack_a, stack_b, EXIT_FAILURE);
 	}
 	if (has_stack_duplicates(stack_a) == EXIT_FAILURE)
 	{
-		write(2, "Error: stack has duplicates\n", 28);
+		write(2, "Error\n", 6);
 		cleanup_and_exit(stack_a, stack_b, EXIT_FAILURE);
 	}
 	assign_indexes(stack_a);
@@ -53,7 +42,7 @@ int	main(int argc, char **argv)
 		sort_small(&stack_a, &stack_b, size);
 	else
 		radix_sort(&stack_a, &stack_b);
-	print_stack(stack_a);
+	// print_stack(stack_a);
 	cleanup_and_exit(stack_a, stack_b, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
