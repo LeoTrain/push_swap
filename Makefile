@@ -18,6 +18,9 @@ $(NAME): $(LIBFT) $(OBJS)
 $(LIBFT):
 	make bonus -C $(LIBFT_DIR)
 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
 	rm -f $(OBJS)
 
