@@ -12,8 +12,6 @@
 
 #include "../../includes/push_swap.h"
 
-static int	is_valid_integer(char *str, int *result);
-
 int	check_validity(char **argv, int i, int *value, t_stack **stack_a)
 {
 	if (is_valid_integer(argv[i], value) == EXIT_FAILURE)
@@ -53,7 +51,7 @@ int	fill_stack(t_stack **stack_a, t_stack **new_node, t_stack **current_node)
 	return (EXIT_SUCCESS);
 }
 
-static int	is_valid_integer(char *str, int *result)
+int	is_valid_integer(char *str, int *result)
 {
 	char	*original;
 	long	temp;
@@ -61,6 +59,8 @@ static int	is_valid_integer(char *str, int *result)
 	original = str;
 	while (ft_isspace(*str))
 		str++;
+	if (*str == '\0')
+		return (EXIT_FAILURE);
 	if (*str == '+' || *str == '-')
 		str++;
 	if (!ft_isdigit(*str))

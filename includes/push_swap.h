@@ -37,6 +37,7 @@ int		check_validity(char **argv, int i, int *value, t_stack **stack_a);
 int		create_new_node(t_stack **new_node, t_stack **stack_a, int value);
 int		fill_stack(t_stack **stack_a, t_stack **new_node,
 			t_stack **current_node);
+int		is_valid_integer(char *str, int *result);
 int		validate_and_parse(int argc, char **argv, t_stack **stack_a);
 
 int		find_min_position(t_stack *stack);
