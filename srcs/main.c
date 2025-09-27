@@ -12,6 +12,7 @@
 
 #include "../includes/push_swap.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 static int	has_stack_duplicates(t_stack *stack);
 static void	assign_indexes(t_stack *stack);
@@ -43,12 +44,12 @@ static void	init_data(int argc, char **argv, t_stack **stack_a,
 {
 	if (validate_and_parse(argc, argv, stack_a) == EXIT_FAILURE)
 	{
-		write(2, "Error\n", 6);
+		write(STDERR_FILENO, "Error\n", 6);
 		cleanup_and_exit(*stack_a, *stack_b, EXIT_FAILURE);
 	}
 	if (has_stack_duplicates(*stack_a) == EXIT_FAILURE)
 	{
-		write(2, "Error\n", 6);
+		write(STDERR_FILENO, "Error\n", 6);
 		cleanup_and_exit(*stack_a, *stack_b, EXIT_FAILURE);
 	}
 	assign_indexes(*stack_a);
